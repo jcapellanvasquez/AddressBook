@@ -1,1 +1,29 @@
-<p>login works!</p>
+<div class="flex md:justify-content-center p-component align-items-center">
+  <div class="col-12 md:col-6 lg:col-3 sm:col-12">
+    <h1 class="flex text-800 justify-content-center align-items-center mt-8 mb-5">
+      <i class="pi pi-paperclip text-primary mr-3"
+         style="font-size: 3rem"></i>
+      <div>Address Book</div>
+    </h1>
+    <div class="card shadow-2 flex flex-column align-content-end justify-content-end">
+      <form [formGroup]="this.form" (ngSubmit)="auth()">
+        <h2 class="mt-1 mb-4">Login</h2>
+        <div class="field p-fluid mb-3">
+        <span class="p-float-label">
+            <input formControlName="username" id="username" type="text" pInputText>
+            <label for="username">Username</label>
+          <small class="p-error" *ngIf="username?.dirty && username?.invalid">Username required</small>
+        </span>
+        </div>
+        <div class="field p-fluid mb-5">
+        <span class="p-float-label">
+            <input formControlName="password" id="password" type="password" pInputText>
+            <label for="password">Password</label>
+            <small class="p-error" *ngIf="password?.dirty && password?.invalid">Password required</small>
+        </span>
+        </div>
+        <button [loading]="isLoading" pButton type="submit" iconPos="right" icon="pi pi-arrow-circle-right" label="Login"></button>
+      </form>
+    </div>
+  </div>
+</div>
