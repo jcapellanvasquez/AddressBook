@@ -22,7 +22,7 @@ inside project folder run:
 * navigate to ```http://localhost:4200```
 
 
-##Authors
+## Authors
 
 * Julio J. Capellán
 
