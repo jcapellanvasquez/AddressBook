@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface ClientRepository extends CrudRepository<Client, Integer> {
     List<Client> findAllByActiveTrue();
+    Client findClientByActiveTrueAndId(Integer id);
 }

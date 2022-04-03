@@ -2,26 +2,46 @@ package com.example.addcressbook.controllers;
 
 import com.example.addcressbook.entities.Client;
 import com.example.addcressbook.repositories.ClientRepository;
+import com.example.addcressbook.services.ClientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
 @RequestMapping("client")
 public class ClientController {
 
-    final ClientRepository clientRep;
+    final ClientService clientSrv;
 
-    ClientController(ClientRepository clientRep) {
-        this.clientRep = clientRep;
+    ClientController(ClientService clientSrv) {
+        this.clientSrv = clientSrv;
     }
 
-    @RequestMapping("")
+    @GetMapping("")
     public ResponseEntity<List<Client>> findAll() {
-        List<Client> clients = this.clientRep.findAllByActiveTrue();
-        return new ResponseEntity<List<Client>>(clients, HttpStatus.ACCEPTED);
+        return this.clientSrv.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Client> find(@PathVariable Integer id) {
+        return this.clientSrv.find(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<Client> save(@RequestBody Client client) {
+        return this.clientSrv.save(client);
+    }
+
+    @PutMapping
+    public ResponseEntity<Client> update(@RequestBody Client client) {
+        return this.clientSrv.save(client);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        return this.clientSrv.delete(id);
     }
 }
