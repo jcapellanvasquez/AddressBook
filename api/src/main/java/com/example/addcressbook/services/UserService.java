@@ -45,8 +45,6 @@ public class UserService {
 
         try {
             user = findByUsuario(credential.getUsername());
-            log.warn("Password: {}",credential.getPassword());
-            log.warn("Hash: {}",passwordEncoder.encode(credential.getPassword()));
 
             if (user == null) {
                 throw new UserAuthenticationException("User not found");

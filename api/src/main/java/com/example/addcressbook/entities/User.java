@@ -1,5 +1,6 @@
 package com.example.addcressbook.entities;
 
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -84,6 +85,7 @@ public class User implements UserDetails {
         this.name = name;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
