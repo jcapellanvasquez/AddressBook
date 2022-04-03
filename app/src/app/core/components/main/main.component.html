@@ -1,2 +1,8 @@
-<p>main works!</p>
-<router-outlet></router-outlet>
+<div class="main-layout">
+  <div class="flex flex-column py-3">
+    <p-tabMenu [model]="items"></p-tabMenu>
+  </div>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

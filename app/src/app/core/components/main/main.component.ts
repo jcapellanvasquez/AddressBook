@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Menu} from "primeng/menu";
+import {MenuItem} from "primeng/api";
 
 @Component({
   selector: 'app-main',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  public items: MenuItem[] = [
+    {label: 'Home', icon: 'pi pi-fw pi-home', routerLink: 'home'},
+    {label: 'Clients', icon: 'pi pi-fw pi-user-plus', routerLink: 'client'},
+  ]
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

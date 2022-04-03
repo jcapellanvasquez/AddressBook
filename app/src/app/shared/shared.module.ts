@@ -6,6 +6,12 @@ import {MenuModule} from "primeng/menu";
 import {InputTextModule} from "primeng/inputtext";
 import {TabMenuModule} from "primeng/tabmenu";
 import {ToastModule} from "primeng/toast";
+import {OrderListModule} from "primeng/orderlist";
+import {HttpClient} from "@angular/common/http";
+import {DataViewModule} from "primeng/dataview";
+import {ChipModule} from "primeng/chip";
+import {AvatarModule} from "primeng/avatar";
+import {AvatarGroupModule} from "primeng/avatargroup";
 
 
 
@@ -18,7 +24,12 @@ import {ToastModule} from "primeng/toast";
     MenuModule,
     InputTextModule,
     TabMenuModule,
-    ToastModule
+    ToastModule,
+    OrderListModule,
+    DataViewModule,
+    ChipModule,
+    AvatarModule,
+    AvatarGroupModule
   ],
   exports: [
     ButtonModule,
@@ -26,7 +37,12 @@ import {ToastModule} from "primeng/toast";
     MenuModule,
     InputTextModule,
     TabMenuModule,
-    ToastModule
+    ToastModule,
+    OrderListModule,
+    DataViewModule,
+    ChipModule,
+    AvatarModule,
+    AvatarGroupModule
   ]
 })
 export class SharedModule { }
