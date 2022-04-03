@@ -1,6 +1,7 @@
 package com.example.addcressbook.controllers;
 
 import com.example.addcressbook.entities.Client;
+import com.example.addcressbook.exceptions.ResourceNotFound;
 import com.example.addcressbook.repositories.ClientRepository;
 import com.example.addcressbook.services.ClientService;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Client> find(@PathVariable Integer id) {
+    public ResponseEntity<Client> find(@PathVariable Integer id) throws ResourceNotFound {
         return this.clientSrv.find(id);
     }
 

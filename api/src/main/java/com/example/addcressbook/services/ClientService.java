@@ -1,6 +1,7 @@
 package com.example.addcressbook.services;
 
 import com.example.addcressbook.entities.Client;
+import com.example.addcressbook.exceptions.ResourceNotFound;
 import com.example.addcressbook.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -25,8 +27,11 @@ public class ClientService {
         return new ResponseEntity<List<Client>>(clients, HttpStatus.ACCEPTED);
     }
 
-    public ResponseEntity<Client> find(Integer id) {
+    public ResponseEntity<Client> find(Integer id) throws ResourceNotFound {
         Client client = this.clientRep.findClientByActiveTrueAndId(id);
+        if (client == null) {
+            throw new ResourceNotFound("Resource not found");
+        }
         return new ResponseEntity<Client>(client, HttpStatus.ACCEPTED);
     }
 
