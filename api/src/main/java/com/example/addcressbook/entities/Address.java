@@ -2,38 +2,38 @@ package com.example.addcressbook.entities;
 
 import javax.persistence.*;
 
-@Table(name= "addresses", schema = "public")
+@Table(name = "addresses", schema = "public")
 @Entity
 public class Address {
 
     @Id
-    @SequenceGenerator(name="addresses_id_seq", sequenceName = "addresses_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "addresses_id_seq", sequenceName = "addresses_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "addresses_id_seq")
-    @Column(name="id")
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name="state")
+    @Column(name = "state")
     private String state;
 
-    @Column(name="city")
+    @Column(name = "city")
     private String city;
 
-    @Column(name="address")
+    @Column(name = "address")
     private String address;
 
-    @Column(name="address1")
+    @Column(name = "address1")
     private String address1;
 
-    @Column(name="zip")
+    @Column(name = "zip")
     private String zip;
 
-    @Column(name ="client_id")
+    @Column(name = "client_id")
     private Integer clientId;
 
-    @Column(name="active")
-    private Boolean active;
+    @Column(name = "active")
+    private Boolean active = true;
 
-    @Column(name="user_id")
+    @Column(name = "user_id")
     private Integer userId;
 
     public Address() {

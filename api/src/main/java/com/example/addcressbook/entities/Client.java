@@ -3,41 +3,43 @@ package com.example.addcressbook.entities;
 import javax.persistence.*;
 import java.util.List;
 
-@Table(name="clients", schema = "public")
+@Table(name = "clients", schema = "public")
 @Entity
 public class Client {
 
     @Id
-    @SequenceGenerator(name="clients_id_seq", sequenceName = "clients_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clients_id_seq")
-    @Column(name="id")
+//    @GeneratedValue(strategy = GenerationType.AUTO, generator = "public.clients_id_seq")
+//    @SequenceGenerator(name = "public.clients_id_seq", sequenceName = "public.clients_id_seq", initialValue = 200)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name="active")
+    @Column(name = "active")
     private Boolean active = true;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany
-    @JoinColumn(name="client_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id")
     private List<Address> addressList;
 
     public Client() {
     }
 
-    public Client(Integer id, String name, String email, Boolean active) {
+    public Client(Integer id, String name, String email, Boolean active, User user, List<Address> addressList) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.active = active;
+        this.user = user;
+        this.addressList = addressList;
     }
 
     public Integer getId() {

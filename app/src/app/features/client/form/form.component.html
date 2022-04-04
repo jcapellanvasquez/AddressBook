@@ -24,7 +24,7 @@
           <small class="p-error" *ngIf="this.clientSrv.name?.touched && this.clientSrv.addressList.length == 0">Add at least 1 address</small>
           <div class="flex align-items-center flex-wrap">
             <p-chip *ngFor="let address of this.clientSrv.addressList; index as i"
-                    label="{{address.address1}} {{address.state}} {{address.city}}"
+                    label="{{address.address1}} {{address.state}} {{address.zip}} {{address.city}}"
                     icon="pi pi-map-marker"
                     [removable]="true"
                     (onRemove)="this.clientSrv.removeAddress(i)"

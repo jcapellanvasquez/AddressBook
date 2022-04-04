@@ -31,6 +31,7 @@ export class ClientService {
       address: ['', Validators.required],
       address1: [''],
       state: ['', Validators.required],
+      zip: ['', Validators.required],
       city: ['', Validators.required],
     })
   }
@@ -41,9 +42,9 @@ export class ClientService {
 
   public saveClient() {
     if (this.form.valid && this._addressList.length > 0) {
-      const data = {
+      const data: Client = {
         ...this.form.getRawValue(),
-        adressList: this.addressList,
+        addressList: this.addressList,
         user: {...this.loginSrv.getUserFromToken()}
       }
       this.isLoading = true;
@@ -53,7 +54,7 @@ export class ClientService {
           this.form.reset();
           this.addressList.length = 0;
           this.showSuccessMsg()
-        }, null, () => this.isLoading = false)
+        }, error => this.isLoading = false, () => this.isLoading = false)
     } else {
       this.form.markAllAsTouched()
     }
@@ -90,6 +91,11 @@ export class ClientService {
 
   get state() {
     return this.addressForm.get('state')
+  }
+
+
+  get zip() {
+    return this.addressForm.get('zip')
   }
 
   get city() {

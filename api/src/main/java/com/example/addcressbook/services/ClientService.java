@@ -1,7 +1,9 @@
 package com.example.addcressbook.services;
 
+import com.example.addcressbook.entities.Address;
 import com.example.addcressbook.entities.Client;
 import com.example.addcressbook.exceptions.ResourceNotFound;
+import com.example.addcressbook.repositories.AddressRepository;
 import com.example.addcressbook.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +19,11 @@ import java.util.List;
 @Transactional
 public class ClientService {
     final ClientRepository clientRep;
+    final AddressRepository addressRep;
 
-    ClientService(ClientRepository clientRep) {
+    ClientService(ClientRepository clientRep, AddressRepository addressRep) {
         this.clientRep = clientRep;
+        this.addressRep = addressRep;
     }
 
     public ResponseEntity<List<Client>> findAll() {
@@ -36,8 +40,20 @@ public class ClientService {
     }
 
     public ResponseEntity<Client> save(Client client) {
+        client.setId(client.getId() == null ? this.clientRep.getNextPk(): client.getId());
+        client.getAddressList().forEach( address -> {
+            address.setClientId(client.getId());
+            address.setUserId(client.getUser().getId());
+            address.setAddress1(address.getAddress1() == null ? "": address.getAddress1());
+            address.setActive(true);
+        });
         Client client1 = this.clientRep.save(client);
         return new ResponseEntity<Client>(client1, HttpStatus.ACCEPTED);
+    }
+
+    private void saveAddresses(Client client, List<Address> addressList) {
+        this.addressRep.deleteAll(addressList);
+        this.addressRep.saveAll(addressList);
     }
 
     public ResponseEntity<Client> update(Client client) {
