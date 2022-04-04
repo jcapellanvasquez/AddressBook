@@ -5,7 +5,8 @@ import {Address, Client} from "../../../core/models";
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Message, MessageService} from "primeng/api";
 import {LoginService} from "../../auth/services/login.service";
-import {delay} from "rxjs";
+import {combineAll, delay, switchMap, tap} from "rxjs";
+import {ActivatedRoute, ActivatedRouteSnapshot, Route, Router} from "@angular/router";
 
 @Injectable()
 export class ClientService {
@@ -14,12 +15,14 @@ export class ClientService {
   public addressForm: FormGroup;
   public _addressList: Address[] = [];
   public isLoading = false;
+  private isEditing = false;
 
 
   constructor(public http: HttpClient,
               private fb: FormBuilder,
               public loginSrv: LoginService,
-              public msgSrv: MessageService) {
+              public msgSrv: MessageService,
+              private router: Router) {
     this.form = this.fb.group({
       id: [''],
       name: ['', Validators.required],
@@ -28,6 +31,8 @@ export class ClientService {
     })
 
     this.addressForm = this.fb.group({
+      id: [''],
+      active: [''],
       address: ['', Validators.required],
       address1: [''],
       state: ['', Validators.required],
@@ -40,19 +45,33 @@ export class ClientService {
     return this.http.get<Client[]>(`${this.url}/client`)
   }
 
+  public getClient(id: number) {
+    this.isLoading = true;
+    return this.http
+      .get<Client>(`${this.url}/client/${id}`)
+      .pipe(
+        delay(250),
+        tap(client => this.setClient(client))
+      )
+  }
+
   public saveClient() {
     if (this.form.valid && this._addressList.length > 0) {
       const data: Client = {
         ...this.form.getRawValue(),
-        addressList: this.addressList,
+        addressList: this._addressList,
         user: {...this.loginSrv.getUserFromToken()}
       }
       this.isLoading = true;
-      this.http.post(`${this.url}/client`, data)
+      this.http.post<Client>(`${this.url}/client`, data)
         .pipe(delay(250))
         .subscribe(data => {
-          this.form.reset();
-          this.addressList.length = 0;
+          if (this.isEditing) {
+            this.getClient(data.id).subscribe()
+          } else {
+            this.form.reset()
+            this._addressList.length = 0;
+          }
           this.showSuccessMsg()
         }, error => this.isLoading = false, () => this.isLoading = false)
     } else {
@@ -62,6 +81,16 @@ export class ClientService {
 
   showSuccessMsg() {
     this.msgSrv.add({severity: 'success', summary: 'Registration success', detail: '', key: 'toast'})
+  }
+
+  public setClient(client: Client) {
+    this.isEditing = true;
+    this.addressList = client.addressList;
+    this.form.patchValue({
+      id: client.id,
+      name: client.name,
+      email: client.email
+    })
   }
 
   public saveAddress() {
@@ -78,7 +107,11 @@ export class ClientService {
   }
 
   get addressList() {
-    return this._addressList
+    return this._addressList.filter( add => add.active)
+  }
+
+  set addressList(list: Address[]) {
+    this._addressList = list;
   }
 
   get address() {
@@ -103,8 +136,6 @@ export class ClientService {
   }
 
   removeAddress(index: number) {
-    this.addressList.slice(index, 1)
+    this.addressList[index].active = false;
   }
-
-
 }

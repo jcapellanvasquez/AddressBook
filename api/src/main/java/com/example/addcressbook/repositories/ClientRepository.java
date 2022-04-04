@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ClientRepository extends CrudRepository<Client, Integer> {
-    List<Client> findAllByActiveTrue();
+public interface ClientRepository extends JpaRepository<Client, Integer> {
+    List<Client> findAllByActiveTrueOrderByIdDesc();
     Client findClientByActiveTrueAndId(Integer id);
 
     @Query(value = "select nextval('public.clients_id_seq')", nativeQuery = true)

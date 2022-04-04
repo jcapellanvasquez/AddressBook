@@ -2,6 +2,7 @@ package com.example.addcressbook.entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Table(name = "clients", schema = "public")
 @Entity
@@ -75,7 +76,7 @@ public class Client {
     }
 
     public List<Address> getAddressList() {
-        return addressList;
+        return addressList.stream().filter( add -> add.getActive()).collect(Collectors.toList());
     }
 
     public void setAddressList(List<Address> addressList) {
