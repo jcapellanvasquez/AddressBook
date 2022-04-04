@@ -1,0 +1,47 @@
+<p-toast key="toast"></p-toast>
+<div class="flex md:justify-content-center p-component align-items-center">
+  <div class="col-12 md:col-6 lg:col-3 sm:col-12">
+    <div class="card shadow-2 flex flex-column align-content-end justify-content-end">
+      <form [formGroup]="this.clientSrv.form" (ngSubmit)="this.clientSrv.saveClient()">
+        <h2 class="mt-1 mb-4">Registration</h2>
+        <div class="field p-fluid mb-5">
+          <span class="p-float-label">
+              <input formControlName="name" id="name" type="text" pInputText>
+              <label for="name">Name</label>
+             <small class="p-error" *ngIf="this.clientSrv.name?.touched && this.clientSrv.name?.invalid">Name is required</small>
+          </span>
+        </div>
+        <div class="field p-fluid mb-5">
+          <span class="p-float-label">
+              <input formControlName="email" id="email" type="email" pInputText>
+              <label for="email">E-mail</label>
+             <small class="p-error" *ngIf="this.clientSrv.email?.touched && this.clientSrv.email?.invalid">E-mail is required</small>
+          </span>
+        </div>
+        <div class="field p-fluid mb-5">
+          <h3 (click)="openAddressModal()">Addresses <i
+            class="pi pi-plus-circle text-primary font-bold cursor-pointer"></i></h3>
+          <small class="p-error" *ngIf="this.clientSrv.name?.touched && this.clientSrv.addressList.length == 0">Add at least 1 address</small>
+          <div class="flex align-items-center flex-wrap">
+            <p-chip *ngFor="let address of this.clientSrv.addressList; index as i"
+                    label="{{address.address1}} {{address.state}} {{address.city}}"
+                    icon="pi pi-map-marker"
+                    [removable]="true"
+                    (onRemove)="this.clientSrv.removeAddress(i)"
+                    styleClass="mb-2 mr-2"></p-chip>
+          </div>
+        </div>
+        <button pButton
+                type="button"
+                class="p-button-text p-button-plain mr-3"
+                iconPos="left"
+                icon="pi pi-arrow-left"
+                routerLink="client"
+                label="Back"></button>
+        <button [loading]="this.clientSrv.isLoading"  pButton type="submit" iconPos="right" icon="pi pi-save" label="Save"></button>
+      </form>
+    </div>
+  </div>
+</div>
+
+

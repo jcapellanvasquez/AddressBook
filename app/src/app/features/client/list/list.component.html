@@ -4,8 +4,9 @@
       <ng-template pTemplate="header">
         <div class="flex justify-content-between">
           <h2 class="text-800">Clients list</h2>
-          <p-button label="add" icon="pi pi-user-plus"></p-button>
-
+          <p-button label="add"
+                    routerLink="new"
+                    icon="pi pi-user-plus"></p-button>
         </div>
       </ng-template>
       <ng-template let-client pTemplate="listItem">

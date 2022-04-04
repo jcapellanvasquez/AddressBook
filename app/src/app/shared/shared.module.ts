@@ -12,6 +12,8 @@ import {DataViewModule} from "primeng/dataview";
 import {ChipModule} from "primeng/chip";
 import {AvatarModule} from "primeng/avatar";
 import {AvatarGroupModule} from "primeng/avatargroup";
+import {MessageModule} from "primeng/message";
+import {MessagesModule} from "primeng/messages";
 
 
 
@@ -29,7 +31,9 @@ import {AvatarGroupModule} from "primeng/avatargroup";
     DataViewModule,
     ChipModule,
     AvatarModule,
-    AvatarGroupModule
+    AvatarGroupModule,
+    MessageModule,
+    MessagesModule
   ],
   exports: [
     ButtonModule,
@@ -42,7 +46,9 @@ import {AvatarGroupModule} from "primeng/avatargroup";
     DataViewModule,
     ChipModule,
     AvatarModule,
-    AvatarGroupModule
+    AvatarGroupModule,
+    MessageModule,
+    MessagesModule
   ]
 })
 export class SharedModule { }

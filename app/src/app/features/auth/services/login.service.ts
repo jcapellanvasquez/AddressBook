@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../../../../environments/environment";
-import {Token, UserCredential} from "../../../core/models";
+import {Token, User, UserCredential} from "../../../core/models";
 import {HttpClient} from "@angular/common/http";
 import {Observable, tap} from "rxjs";
+import {JwtHelperService} from "@auth0/angular-jwt";
+
+const jwtHelper = new JwtHelperService();
 
 @Injectable()
 export class LoginService {
@@ -25,7 +28,11 @@ export class LoginService {
     localStorage.setItem("token", token.token)
   }
 
-  public getToken() {
-    return localStorage.getItem("token")
+  public getToken(): string | undefined {
+    return localStorage.getItem("token") || undefined
+  }
+
+  public getUserFromToken(): User {
+    return jwtHelper.decodeToken(this.getToken()).user;
   }
 }

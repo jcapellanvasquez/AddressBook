@@ -8,7 +8,8 @@ import java.util.List;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name="clients_id_seq", sequenceName = "clients_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clients_id_seq")
     @Column(name="id")
     private Integer id;
 
@@ -19,7 +20,7 @@ public class Client {
     private String email;
 
     @Column(name="active")
-    private Boolean active;
+    private Boolean active = true;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

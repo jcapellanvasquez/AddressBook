@@ -1,0 +1,39 @@
+<p-messages [(value)]="msgs"></p-messages>
+<form class="formgrid grid my-3" [formGroup]="this.clientSrv.addressForm" (ngSubmit)="add()">
+  <div class="field col-12 p-fluid mb-5">
+          <span class="p-float-label">
+              <input formControlName="address" id="address" type="text" pInputText>
+              <label for="address">Address</label>
+              <small class="p-error" *ngIf="this.clientSrv.address?.touched && this.clientSrv.address?.invalid">Address required</small>
+          </span>
+  </div>
+  <div class="field col-12 p-fluid mb-5">
+          <span class="p-float-label">
+              <input formControlName="address1" id="address1" type="text" pInputText>
+              <label for="address">Address</label>
+          </span>
+  </div>
+  <div class="field col-12 md:col-6 p-fluid mb-5">
+          <span class="p-float-label">
+              <input formControlName="state" id="state" type="text" pInputText>
+              <label for="state">State</label>
+              <small class="p-error" *ngIf="this.clientSrv.state?.touched && this.clientSrv.state?.invalid">State required</small>
+          </span>
+  </div>
+  <div class="field col-12 md:col-6 p-fluid mb-5">
+          <span class="p-float-label">
+              <input formControlName="city" id="city" type="text" pInputText>
+              <label for="city">City</label>
+              <small class="p-error" *ngIf="this.clientSrv.city?.touched && this.clientSrv.city?.invalid">City required</small>
+          </span>
+  </div>
+  <button pButton type="submit" class="mr-3" iconPos="right" icon="pi pi-check" label="Add"></button>
+  <button pButton
+          type="button"
+          class="p-button-text p-button-plain"
+          iconPos="right"
+          icon="pi pi-times"
+          (click)="close()"
+          label="Close"></button>
+</form>
+
