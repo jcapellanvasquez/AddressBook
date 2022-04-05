@@ -9,7 +9,7 @@ COPY . /app
 
 RUN npm install
 
-RUN npm run build --prod
+RUN npm run build
 
 # Imagen necesaria para el servidor web en este caso apache2
 FROM httpd:2.4

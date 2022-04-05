@@ -16,9 +16,12 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = this.loginSrv.getToken()
-    const clone = req.clone(
-      {headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token)}
-    );
-    return next.handle(clone);
+    if (token) {
+      const clone = req.clone(
+        {headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token)}
+      );
+      return next.handle(clone);
+    }
+    return next.handle(req);
   }
 }

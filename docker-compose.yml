@@ -1,31 +1,31 @@
 version: '3.1'
 
 services:
-#  app:
-#    build:
-#      context: app
-#      dockerfile: Dockerfile
-#    restart: always
-#    ports:
-#      - "80:80"
-#    container_name: app
-#    depends_on:
-#      - api
-#  api:
-#    build:
-#      context: api
-#      dockerfile: Dockerfile
-#    #restart: unless-stopped
-#    ports:
-#      - "8080:8080"
-#    container_name: api
-#    depends_on:
-#      - db
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/dbshipping
-#      - SPRING_DATASOURCE_USERNAME=uship
-#      - SPRING_DATASOURCE_PASSWORD=docker
-#      - SPRING_JPA_GENERATE_DDL=FALSE
+  app:
+    build:
+      context: app
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+    container_name: app
+    depends_on:
+      - api
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    container_name: api
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/addressbook
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=letmein
+      - SPRING_JPA_GENERATE_DDL=FALSE
   db:
     build:
       context: db
