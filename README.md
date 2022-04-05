@@ -18,13 +18,11 @@ inside project folder run:
 * ```docker-compose build```
 * ```docker-compose up```
 
-### Credentials
-```User: admin```
-```Password: admin```
 
 ## Execution
-* navigate to ```http://localhost:4200```
-
+* navigate to ```http://localhost```
+* Login ```User: admin```
+```Password: admin```
 
 ## Authors
 
