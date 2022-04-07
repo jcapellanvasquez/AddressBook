@@ -39,28 +39,18 @@ public class ClientService {
     public ResponseEntity<Client> save(Client client) {
         client.setId(client.getId() == null ? this.clientRep.getNextPk() : client.getId());
         client.getAddressList().forEach(address -> {
-            address.setClientId(client.getId());
             address.setUserId(client.getUser().getId());
             address.setAddress1(address.getAddress1() == null ? "" : address.getAddress1());
+            address.setActive(address.getActive() == null || address.getActive());
         });
+
         Client client1 = this.clientRep.saveAndFlush(client);
-        return new ResponseEntity<Client>(client1, HttpStatus.ACCEPTED);
-    }
-
-    private void saveAddresses(Client client, List<Address> addressList) {
-        this.addressRep.deleteAll(addressList);
-        this.addressRep.saveAll(addressList);
-    }
-
-    public ResponseEntity<Client> update(Client client) {
-        Client client1 = this.clientRep.save(client);
         return new ResponseEntity<Client>(client1, HttpStatus.ACCEPTED);
     }
 
     public ResponseEntity<Void> delete(Integer id) {
         Client client = this.clientRep.findClientByActiveTrueAndId(id);
-        client.setActive(false);
-        this.clientRep.save(client);
+        this.clientRep.delete(client);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 }

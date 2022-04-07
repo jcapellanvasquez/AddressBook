@@ -1,9 +1,15 @@
 package com.example.addcressbook.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 
 @Table(name = "addresses", schema = "public")
 @Entity
+@SQLDelete(sql ="UPDATE addresses SET active=false WHERE id=?")
+@Where(clause = "active=true")
 public class Address {
 
     @Id
@@ -22,13 +28,15 @@ public class Address {
     private String address;
 
     @Column(name = "address1")
-    private String address1;
+    private String address1 = "";
 
     @Column(name = "zip")
     private String zip;
 
-    @Column(name = "client_id")
-    private Integer clientId;
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="client_id", nullable = false)
+    private Client client;
 
     @Column(name = "active")
     private Boolean active = true;
@@ -39,14 +47,14 @@ public class Address {
     public Address() {
     }
 
-    public Address(Integer id, String state, String city, String address, String address1, String zip, Integer clientId, Boolean active, Integer userId) {
+    public Address(Integer id, String state, String city, String address, String address1, String zip, Client client, Boolean active, Integer userId) {
         this.id = id;
         this.state = state;
         this.city = city;
         this.address = address;
         this.address1 = address1;
         this.zip = zip;
-        this.clientId = clientId;
+        this.client = client;
         this.active = active;
         this.userId = userId;
     }
@@ -99,13 +107,6 @@ public class Address {
         this.zip = zip;
     }
 
-    public Integer getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Integer clientId) {
-        this.clientId = clientId;
-    }
 
     public Boolean getActive() {
         return active;
@@ -121,5 +122,13 @@ public class Address {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

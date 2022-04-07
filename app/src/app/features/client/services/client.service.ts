@@ -32,7 +32,7 @@ export class ClientService {
 
     this.addressForm = this.fb.group({
       id: [''],
-      active: [''],
+      active: [true],
       address: ['', Validators.required],
       address1: [''],
       state: ['', Validators.required],
@@ -79,6 +79,10 @@ export class ClientService {
     }
   }
 
+  deleteClient(id: number) {
+      console.log('remove')
+  }
+
   showSuccessMsg() {
     this.msgSrv.add({severity: 'success', summary: 'Registration success', detail: '', key: 'toast'})
   }
@@ -94,7 +98,7 @@ export class ClientService {
   }
 
   public saveAddress() {
-    this.addressList.push(this.addressForm.getRawValue())
+    this.addressList.push({...this.addressForm.getRawValue()})
     this.addressForm.reset()
   }
 
@@ -107,7 +111,7 @@ export class ClientService {
   }
 
   get addressList() {
-    return this._addressList.filter( add => add.active)
+    return this._addressList
   }
 
   set addressList(list: Address[]) {

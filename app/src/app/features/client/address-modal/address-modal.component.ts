@@ -18,7 +18,6 @@ export class AddressModalComponent implements OnInit {
   }
 
   public showMessage() {
-    // this.msgs.length = 0;
     this.msgs = [{severity:'info', summary:'New Address added', detail:''}];
   }
 

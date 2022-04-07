@@ -12,7 +12,7 @@ export class ListComponent implements OnInit {
   public clients: Client[] = []
   public isLoading = false;
 
-  constructor(private clientSrv: ClientService) {
+  constructor(public clientSrv: ClientService) {
   }
 
   ngOnInit(): void {
@@ -22,5 +22,6 @@ export class ListComponent implements OnInit {
       this.isLoading = false;
     })
   }
+
 
 }

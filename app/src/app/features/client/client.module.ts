@@ -12,6 +12,7 @@ import { AddressModalComponent } from './address-modal/address-modal.component';
 import {DialogService} from "primeng/dynamicdialog";
 import {LoginService} from "../auth/services/login.service";
 import {MessageService} from "primeng/api";
+import {RippleModule} from "primeng/ripple";
 
 
 @NgModule({
@@ -20,13 +21,14 @@ import {MessageService} from "primeng/api";
     FormComponent,
     AddressModalComponent
   ],
-  imports: [
-    CommonModule,
-    ClientRoutingModule,
-    SharedModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+    imports: [
+        CommonModule,
+        ClientRoutingModule,
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+        RippleModule
+    ],
   providers: [ClientService, DialogService, LoginService, MessageService],
   entryComponents: [
     AddressModalComponent

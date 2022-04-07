@@ -1,16 +1,20 @@
 package com.example.addcressbook.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Table(name = "clients", schema = "public")
 @Entity
+@SQLDelete(sql = "UPDATE clients SET active=false WHERE id=?")
+@Where(clause = "active=true")
 public class Client {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO, generator = "public.clients_id_seq")
-//    @SequenceGenerator(name = "public.clients_id_seq", sequenceName = "public.clients_id_seq", initialValue = 200)
     @Column(name = "id")
     private Integer id;
 
@@ -27,8 +31,8 @@ public class Client {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Address> addressList;
 
     public Client() {
@@ -76,7 +80,7 @@ public class Client {
     }
 
     public List<Address> getAddressList() {
-        return addressList.stream().filter( add -> add.getActive()).collect(Collectors.toList());
+        return addressList;
     }
 
     public void setAddressList(List<Address> addressList) {

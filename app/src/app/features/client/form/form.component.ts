@@ -18,8 +18,11 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe( params => {
-      this.clientSrv.getClient(params['id'])
-        .subscribe( _=> this.clientSrv.isLoading = false)
+      const id = params['id'];
+      if (id) {
+        this.clientSrv.getClient(id)
+          .subscribe( _=> this.clientSrv.isLoading = false)
+      }
     })
   }
 
