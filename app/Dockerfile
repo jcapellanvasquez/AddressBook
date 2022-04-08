@@ -12,7 +12,7 @@ RUN npm install
 RUN npm run build
 
 # Imagen necesaria para el servidor web en este caso apache2
-FROM httpd:2.4
+FROM httpd:2.4 as prod-step
 
 COPY --from=build-step /app/dist/app /usr/local/apache2/htdocs/
 

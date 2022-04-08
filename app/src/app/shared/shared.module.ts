@@ -14,6 +14,8 @@ import {AvatarModule} from "primeng/avatar";
 import {AvatarGroupModule} from "primeng/avatargroup";
 import {MessageModule} from "primeng/message";
 import {MessagesModule} from "primeng/messages";
+import {ConfirmPopupModule} from "primeng/confirmpopup";
+import {ConfirmationService} from "primeng/api";
 
 
 
@@ -33,7 +35,8 @@ import {MessagesModule} from "primeng/messages";
     AvatarModule,
     AvatarGroupModule,
     MessageModule,
-    MessagesModule
+    MessagesModule,
+    ConfirmPopupModule
   ],
   exports: [
     ButtonModule,
@@ -48,7 +51,9 @@ import {MessagesModule} from "primeng/messages";
     AvatarModule,
     AvatarGroupModule,
     MessageModule,
-    MessagesModule
-  ]
+    MessagesModule,
+    ConfirmPopupModule
+  ],
+  providers: [ConfirmationService]
 })
 export class SharedModule { }

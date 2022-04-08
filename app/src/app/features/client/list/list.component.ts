@@ -16,12 +16,19 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getClients();
+  }
+
+  public getClients() {
     this.isLoading= true;
-    this.clientSrv.getClients().pipe(delay(500)).subscribe(data => {
+    this.clientSrv.getClients().pipe(delay(250)).subscribe(data => {
       this.clients = data
       this.isLoading = false;
     })
   }
 
 
+  public delete(event: any, id: number) {
+    this.clientSrv.deleteClient(event,id).subscribe(_ => this.getClients())
+  }
 }

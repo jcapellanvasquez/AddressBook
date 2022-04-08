@@ -32,15 +32,15 @@
                       type="button"
                       icon="pi pi-trash"
                       label="Remove"
-                      (click)="clientSrv.deleteClient(client.id)"
-                      class="p-button-text p-button-plain"></button>
+                      (click)="delete($event, client.id)"
+                      class="p-button-text text-indigo-400 p-button-plain"></button>
               <button pButton
                       pRipple
                       type="button"
                       icon="pi pi-pencil"
                       label="Edit"
                       routerLink="edit/{{client.id}}"
-                      class="p-button-text p-button-warning p-button-plain"></button>
+                      class="p-button-text text-indigo-400 p-button-plain"></button>
             </div>
           </div>
         </div>
@@ -49,3 +49,4 @@
 
   </div>
 </div>
+<p-confirmPopup></p-confirmPopup>

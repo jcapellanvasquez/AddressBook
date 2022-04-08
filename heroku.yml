@@ -1,0 +1,13 @@
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+  config:
+build:
+  docker:
+    web: app/Dockerfile
+    api: api/Dockerfile
+    db: db/Dockerfile
+  release:
+    web: app/Dockerfile
+    target: prod-step

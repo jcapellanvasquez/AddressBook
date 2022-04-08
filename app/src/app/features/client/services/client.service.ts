@@ -3,9 +3,9 @@ import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Address, Client} from "../../../core/models";
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Message, MessageService} from "primeng/api";
+import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {LoginService} from "../../auth/services/login.service";
-import {combineAll, delay, switchMap, tap} from "rxjs";
+import {BehaviorSubject, combineAll, delay, of, Subject, switchMap, tap} from "rxjs";
 import {ActivatedRoute, ActivatedRouteSnapshot, Route, Router} from "@angular/router";
 
 @Injectable()
@@ -22,6 +22,7 @@ export class ClientService {
               private fb: FormBuilder,
               public loginSrv: LoginService,
               public msgSrv: MessageService,
+              public confirmSrv: ConfirmationService,
               private router: Router) {
     this.form = this.fb.group({
       id: [''],
@@ -79,9 +80,24 @@ export class ClientService {
     }
   }
 
-  deleteClient(id: number) {
-      console.log('remove')
-  }
+  deleteClient(e: any, id: number) {
+    const res =new  Subject();
+    this.confirmSrv.confirm({
+      target: e.target,
+      message: 'Are you sure that you want to proceed?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.isLoading = true;
+        this.http.delete(`${this.url}/client/${id}`)
+          .pipe(delay(250))
+          .subscribe(() => {
+            this.msgSrv.add({severity: 'warn', summary: 'Removed', detail: '', key: 'toast'})
+            res.next(null);
+          }, null, () => this.isLoading = false)
+      }
+    })
+    return res.asObservable();
+  };
 
   showSuccessMsg() {
     this.msgSrv.add({severity: 'success', summary: 'Registration success', detail: '', key: 'toast'})
