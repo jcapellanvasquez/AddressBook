@@ -19,19 +19,17 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(catchError(event => {
       if (event instanceof HttpErrorResponse) {
         switch (event.status) {
-          case 0:
-            this.appMsgSrv.sendMsg({severity: 'error', summary: 'Something went wrong whit server'})
-            this.roter.navigate(['/login'])
-            localStorage.clear()
-            break;
           case 403:
             this.appMsgSrv.sendMsg({severity: 'warn', summary: 'Session timeout'})
             this.roter.navigate(['/login'])
             localStorage.clear()
             break;
+          case 0:
+          case 404:
           case 500:
-            this.appMsgSrv.sendMsg({severity: 'error', summary: 'Was an error', detail: event.message})
+            this.appMsgSrv.sendMsg({severity: 'error', summary: 'Something went wrong with the server', detail: event.message})
             this.roter.navigate(['/login'])
+            localStorage.clear()
             break
           default:
         }

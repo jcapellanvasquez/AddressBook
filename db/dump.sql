@@ -545,7 +545,7 @@ COPY public.clients (id, user_id, name, email, active) FROM stdin;
 --
 
 COPY public.users (id, username, name, password) FROM stdin;
-1	admin	admin	admin
+1	admin	admin	$2a$10$l7WSU87NolFkjas/e5DQye3ImIi.VKGAwWXATOYKP/2J8tZ/suBDG
 \.
 
 
