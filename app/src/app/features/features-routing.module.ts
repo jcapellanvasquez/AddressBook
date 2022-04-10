@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MainComponent} from "../core/components/main/main.component";
+import {SessionGuard} from "../core/guards/session.guard";
 
 const routes: Routes = [
   {
@@ -22,8 +23,9 @@ const routes: Routes = [
       {
         path: '**',
         redirectTo: 'home'
-      }
-    ]
+      },
+    ],
+    canActivate: [SessionGuard]
   }
 ];
 

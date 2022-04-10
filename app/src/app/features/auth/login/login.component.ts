@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
         if (data.token) {
           this.router.navigate(['/'])
         }
-      })
+      }, null, ()=> this.isLoading = false)
     } else {
       this.username?.markAsDirty()
       this.password?.markAsDirty()

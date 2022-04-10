@@ -7,7 +7,8 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import {LoginService} from "../features/auth/services/login.service";
 import { NotificationHandlerComponent } from './components/notification-handler/notification-handler.component';
-import {SessionInterceptor} from "./interceptors/session.interceptor";
+import {ErrorHandlerInterceptor} from "./interceptors/error-handler.interceptor";
+import {SessionGuard} from "./guards/session.guard";
 
 
 
@@ -26,8 +27,9 @@ import {SessionInterceptor} from "./interceptors/session.interceptor";
   ],
   providers: [
     LoginService,
+    SessionGuard,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true}
   ]
 })
 export class CoreModule { }

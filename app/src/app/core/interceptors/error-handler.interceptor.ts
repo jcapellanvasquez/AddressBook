@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -7,10 +7,10 @@ import {
 } from '@angular/common/http';
 import {catchError, Observable, of} from 'rxjs';
 import {AppMessageService} from "../services/app-message.service";
-import {Route, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Injectable()
-export class SessionInterceptor implements HttpInterceptor {
+export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   constructor(private appMsgSrv: AppMessageService, public roter: Router) {
   }
@@ -39,5 +39,4 @@ export class SessionInterceptor implements HttpInterceptor {
       return of(event)
     }));
   }
-
 }
